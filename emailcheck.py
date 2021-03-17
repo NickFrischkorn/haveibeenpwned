@@ -10,11 +10,13 @@ head = {"User-Agent": "HIBP-Email-Checker", "hibp-api-key": key}
 email_list = open(email_file)
 
 for email in email_list:
+    print(email)
     email = email.replace('\n', '') # remove trailing carriage return
     time.sleep(1.7) # rate limiting for APIv3 is 1500 milliseconds, so 1700 to avoid triggering
     try:
         hibp_check = requests.get(url='https://haveibeenpwned.com/api/v3/breachedaccount/' + email, headers=head)
         if len(hibp_check.text) > 3: # if response is not empty
+               print(hibp_check.text)
                response = hibp_check.text
                response = hibp_check.replace('Name', '')
                response = hibp_check.replace('{', '')
